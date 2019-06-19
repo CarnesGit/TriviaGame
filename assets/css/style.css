@@ -29,3 +29,37 @@ body {
     -webkit-text-stroke-color: black;
     color: white;
 }
+
+#question {
+    margin-top: 250px;
+    margin-left: 550px;
+    color: skyblue;
+}
+
+#c1 {
+    padding-top: 10px;
+    margin-left: 550px;
+    color: darkgrey;
+}
+
+#c2 {
+    padding-top: 10px;
+    margin-left: 550px;
+    color: darkgrey;
+}
+
+#c3 {
+    padding-top: 10px;
+    margin-left: 550px;
+    color: darkgrey;
+}
+
+#c4 {
+    padding-top: 10px;
+    margin-left: 550px;
+    color: darkgrey;
+}
+
+.lSpace {
+    margin-left: 20px;
+}
