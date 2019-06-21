@@ -60,6 +60,18 @@ body {
     color: darkgrey;
 }
 
+#c1Label {
+    padding-top: 10px;
+    /* margin-left: 550px; */
+    color: darkgrey;
+}
+
+#endDis {
+    padding-top: 10px;
+    margin-left: 550px;
+    color: darkgrey;
+}
+
 .lSpace {
     margin-left: 20px;
 }
