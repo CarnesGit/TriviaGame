@@ -157,6 +157,7 @@ $(document).ready(function() {
         //Setting the HTML text for the question and choices
 
         function displayQuestion(currentIndex) {
+            //setting and displaying the first question
             var currentObject = questions[currentIndex]
             var currentChoices = currentObject.choices
             $('#question').text(currentObject.question);
@@ -168,7 +169,31 @@ $(document).ready(function() {
             $('#r2').attr('value', currentChoices.c2);
             $('#r3').attr('value', currentChoices.c3);
             $('#r4').attr('value', currentChoices.c4);
+            setTimeout(function() {
+                displayQuestion(currentIndex + 1)
+                $('#c1Label').empty();
+                $('#c2Label').empty();
+                $('#c3Label').empty();
+                $('#c4Label').empty();
+                $(".radio").prop("checked", false);
+                $('.radio').off();
+                currentIndex = currentIndex + 1
+                incorrectGuesses++
+                if (currentIndex <= 9) {
+                    displayQuestion(currentIndex)
+                } else {
+                    $('#question').text("You Scored a");
+                    $('#endDis').append(correctGuesses + "0%");
+                    $('#c1').hide();
+                    $('#c2').hide();
+                    $('#c3').hide();
+                    $('#c4').hide();
+                }
+            }, 10000);
+
+            //saving incorrect or correct guess count and moving to next question
             $('.radio').on('click', function() {
+                clearTimeout()
                 var selectedAns = $(this).val()
                 if (selectedAns === currentObject.correctAnswer) {
                     correctGuesses++
@@ -183,6 +208,7 @@ $(document).ready(function() {
                 $('#c3Label').empty();
                 $('#c4Label').empty();
                 $(".radio").prop("checked", false);
+                $('.radio').off();
                 currentIndex = currentIndex + 1
                 if (currentIndex <= 9) {
                     displayQuestion(currentIndex)
