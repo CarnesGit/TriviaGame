@@ -139,7 +139,7 @@ $(document).ready(function() {
     $('#c3').hide();
     $('#c4').hide();
 
-    //Change the background, and play audio and set question material for the game screen with start game button
+    //Change the background, play audio and set question material for the game screen with start game button
 
     $('#startBtn').on("click", function() {
         $('body').css("background", "url('assets/images/nightKing.jpg') no-repeat center center fixed");
@@ -156,6 +156,7 @@ $(document).ready(function() {
 
         //Setting the HTML text for the question and choices
 
+
         function displayQuestion(currentIndex) {
             //setting and displaying the first question
             var currentObject = questions[currentIndex]
@@ -169,52 +170,18 @@ $(document).ready(function() {
             $('#r2').attr('value', currentChoices.c2);
             $('#r3').attr('value', currentChoices.c3);
             $('#r4').attr('value', currentChoices.c4);
-            //Setting a timer of 10 seconds for each question
-            // setTimeout(function(timer) {
-            //     displayQuestion(currentIndex + 1)
-            //     $('#c1Label').empty();
-            //     $('#c2Label').empty();
-            //     $('#c3Label').empty();
-            //     $('#c4Label').empty();
-            //     $(".radio").prop("checked", false);
-            //     $('.radio').off();
-            //     currentIndex = currentIndex + 1
-            //     incorrectGuesses++
-            //     if (currentIndex <= 9) {
-            //         displayQuestion(currentIndex)
-            //     } else {
-            //         $('#question').text("You Scored a");
-            //         $('#endDis').append(correctGuesses + "0%");
-            //         $('#c1').hide();
-            //         $('#c2').hide();
-            //         $('#c3').hide();
-            //         $('#c4').hide();
-            //     }
-            // }, 10000);
 
             //saving incorrect or correct guess count and moving to next question
             $('.radio').on('click', function() {
-                setTimeout(function(timer) {
-                    displayQuestion(currentIndex + 1)
-                    if (currentIndex <= 9) {
-                        displayQuestion(currentIndex)
-                    } else {
-                        $('#question').text("You Scored a");
-                        $('#endDis').append(correctGuesses + "0%");
-                        $('#c1').hide();
-                        $('#c2').hide();
-                        $('#c3').hide();
-                        $('#c4').hide();
-                    }
-                }, 10000);
-                var selectedAns = $(this).val()
+                var selectedAns = $(this).val();
+                timer()
                 if (selectedAns === currentObject.correctAnswer) {
-                    correctGuesses++
-                    console.log("Correct Answer " + currentObject.correctAnswer)
-                    console.log("Correct Guesses " + correctGuesses)
+                    correctGuesses++;
+                    console.log("Correct Answer " + currentObject.correctAnswer);
+                    console.log("Correct Guesses " + correctGuesses);
                 } else {
-                    incorrectGuesses++
-                    console.log("Incorrect Guesses " + incorrectGuesses)
+                    incorrectGuesses++;
+                    console.log("Incorrect Guesses " + incorrectGuesses);
                 }
                 $('#c1Label').empty();
                 $('#c2Label').empty();
@@ -224,20 +191,43 @@ $(document).ready(function() {
                 $('.radio').off();
                 currentIndex = currentIndex + 1
                 if (currentIndex <= 9) {
-                    displayQuestion(currentIndex)
+                    displayQuestion(currentIndex);
+                    setTimeout(explode, 2000);
+                    clearTimeout()
                 } else {
-                    $('#question').text("You Scored a");
+                    $('#question').text("You Scored");
                     $('#endDis').append(correctGuesses + "0%");
                     $('#c1').hide();
                     $('#c2').hide();
                     $('#c3').hide();
                     $('#c4').hide();
                 }
-                clearTimeout(timer)
+
             });
-
-
+            //Timer if no guess is made within 10 seconds
+            setTimeout(function timer() {
+                incorrectGuesses++;
+                $('#c1Label').empty();
+                $('#c2Label').empty();
+                $('#c3Label').empty();
+                $('#c4Label').empty();
+                $(".radio").prop("checked", false);
+                $('.radio').off();
+                currentIndex = currentIndex + 1
+                if (currentIndex <= 9) {
+                    displayQuestion(currentIndex);
+                    setTimeout(explode, 2000);
+                } else {
+                    $('#question').text("You Scored");
+                    $('#endDis').append(correctGuesses + "0%");
+                    $('#c1').hide();
+                    $('#c2').hide();
+                    $('#c3').hide();
+                    $('#c4').hide();
+                }
+            }, 10000);
         }
+
         displayQuestion(0);
 
         $('#question').show();
@@ -245,16 +235,5 @@ $(document).ready(function() {
         $('#c2').show();
         $('#c3').show();
         $('#c4').show();
-
-        //Need to write code for the timer on each guess.
-
     });
-
-
-    //Need to write code to keep track of correct and incorrect guesses.
-    //Need to write code to move to next question.
-
-    //Need to write code for end game summary.
-
-
 });
