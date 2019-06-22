@@ -10,6 +10,7 @@ $(document).ready(function() {
     var currentDef;
     var correctGuesses = 0;
     var incorrectGuesses = 0;
+    var runningTimer;
     // Questions array
     var questions = [{
             question: 'What is the name of Jon\'s direwolf?',
@@ -174,7 +175,8 @@ $(document).ready(function() {
             //saving incorrect or correct guess count and moving to next question
             $('.radio').on('click', function() {
                 var selectedAns = $(this).val();
-                timer()
+                clearTimeout(runningTimer);
+                runTimer();
                 if (selectedAns === currentObject.correctAnswer) {
                     correctGuesses++;
                     console.log("Correct Answer " + currentObject.correctAnswer);
@@ -192,8 +194,7 @@ $(document).ready(function() {
                 currentIndex = currentIndex + 1
                 if (currentIndex <= 9) {
                     displayQuestion(currentIndex);
-                    setTimeout(explode, 2000);
-                    clearTimeout()
+
                 } else {
                     $('#question').text("You Scored");
                     $('#endDis').append(correctGuesses + "0%");
@@ -201,31 +202,35 @@ $(document).ready(function() {
                     $('#c2').hide();
                     $('#c3').hide();
                     $('#c4').hide();
+                    clearTimeout(runningTimer);
                 }
 
             });
-            //Timer if no guess is made within 10 seconds
-            setTimeout(function timer() {
-                incorrectGuesses++;
-                $('#c1Label').empty();
-                $('#c2Label').empty();
-                $('#c3Label').empty();
-                $('#c4Label').empty();
-                $(".radio").prop("checked", false);
-                $('.radio').off();
-                currentIndex = currentIndex + 1
-                if (currentIndex <= 9) {
-                    displayQuestion(currentIndex);
-                    setTimeout(explode, 2000);
-                } else {
-                    $('#question').text("You Scored");
-                    $('#endDis').append(correctGuesses + "0%");
-                    $('#c1').hide();
-                    $('#c2').hide();
-                    $('#c3').hide();
-                    $('#c4').hide();
-                }
-            }, 10000);
+
+            // if no guess is made within 10 seconds
+            function runTimer() {
+                runningTimer = setTimeout(function() {
+                    incorrectGuesses++;
+                    $('#c1Label').empty();
+                    $('#c2Label').empty();
+                    $('#c3Label').empty();
+                    $('#c4Label').empty();
+                    $(".radio").prop("checked", false);
+                    $('.radio').off();
+                    currentIndex = currentIndex + 1
+                    if (currentIndex <= 9) {
+                        displayQuestion(currentIndex);
+                    } else {
+                        $('#question').text("You Scored");
+                        $('#endDis').append(correctGuesses + "0%");
+                        $('#c1').hide();
+                        $('#c2').hide();
+                        $('#c3').hide();
+                        $('#c4').hide();
+
+                    }
+                }, 10000);
+            }
         }
 
         displayQuestion(0);
