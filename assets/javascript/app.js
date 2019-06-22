@@ -160,6 +160,7 @@ $(document).ready(function() {
 
         function displayQuestion(currentIndex) {
             //setting and displaying the first question
+
             var currentObject = questions[currentIndex]
             var currentChoices = currentObject.choices
             $('#question').text(currentObject.question);
@@ -171,6 +172,8 @@ $(document).ready(function() {
             $('#r2').attr('value', currentChoices.c2);
             $('#r3').attr('value', currentChoices.c3);
             $('#r4').attr('value', currentChoices.c4);
+            clearTimeout(runningTimer);
+            runTimer();
 
             //saving incorrect or correct guess count and moving to next question
             $('.radio').on('click', function() {
